@@ -1,27 +1,21 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import * as DB from './models'
+import cors from 'cors'
 const app = express()
 const port = process.env.PORT || 8080
 // Middleware setup
 app.use(bodyParser.json()) // allows body to be received as json
 app.use(bodyParser.urlencoded({ extended: false })) // allows body to be received as url encoded
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  )
-  next()
-})
+app.use(cors())
 
 // Routes
 app.get('/', (req, res) => {
   res.json({
     message:
       "Welcome to the questions API, checkout the available routes in the 'routes' field",
-    routes: ['/questions', '/questions/:id', "/switch/:id"]
+    routes: ['/questions', '/questions/:id', '/switch/:id']
   })
 })
 
