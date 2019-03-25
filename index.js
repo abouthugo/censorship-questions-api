@@ -2,7 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import * as DB from './models'
 const app = express()
-const port = 8080
+const port = process.env.PORT || 8080
 // Middleware setup
 app.use(bodyParser.json()) // allows body to be received as json
 app.use(bodyParser.urlencoded({ extended: false })) // allows body to be received as url encoded
