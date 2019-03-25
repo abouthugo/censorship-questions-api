@@ -7,19 +7,21 @@ const port = process.env.PORT || 8080
 app.use(bodyParser.json()) // allows body to be received as json
 app.use(bodyParser.urlencoded({ extended: false })) // allows body to be received as url encoded
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
+  next()
+})
 
 // Routes
 app.get('/', (req, res) => {
   res.json({
     message:
       "Welcome to the questions API, checkout the available routes in the 'routes' field",
-    routes: ['/questions', '/questions/:id']
+    routes: ['/questions', '/questions/:id', "/switch/:id"]
   })
 })
 
@@ -50,11 +52,20 @@ app.post('/question/:id', (req, res) => {
   DB.incrementAnswer(_id, answer)
     .then(confirm => {
       res.json(confirm)
-
     })
     .catch(err => {
       res.json({ error: err })
     })
+})
+
+app.get('/switch/:id', (req, res) => {
+  let { id } = req.params
+  DB.getSwitch(id, res)
+})
+
+app.post('/switch/:id', (req, res) => {
+  let { id } = req.params
+  DB.toggleSwitch(id, res)
 })
 
 app.get('*', (req, res) => {
