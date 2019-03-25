@@ -8,6 +8,11 @@ mongoose.connect(
 )
 mongoose.Promise = Promise
 
-const getQuestions = () => Question.find()
-const findQuestion = (_id) => Question.findById({_id})
-export { getQuestions, findQuestion }
+exports.getQuestions = () => Question.find()
+exports.findQuestion = _id => Question.findById({ _id })
+exports.createQuestion = question => Question.create(question)
+exports.incrementAnswer = (_id, answer) => {
+  const query = { $inc: { 'choices.$.count': 1, 'count': 1 } }
+  const opt = { _id, 'choices.name': answer }
+  return Question.update(opt, query)
+}
