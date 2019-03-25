@@ -8,21 +8,29 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // Routes
 app.get('/', (req, res) => {
-  DB.getQuestions().then(questions => {
-    res.json(questions)
-  })
+  DB.getQuestions()
+    .then(questions => {
+      res.json(questions)
+    })
+    .catch(error => {
+      res.json({ error })
+    })
 })
 
 app.get('/question/:id', (req, res) => {
   let { id } = req.params
-  DB.findQuestion(id).then(q => {
-    res.json(q)
-  }).catch(err => {
-    res.json({error: err})
-  })
+  DB.findQuestion(id)
+    .then(q => {
+      res.json(q)
+    })
+    .catch(err => {
+      res.json({ error: "your id has not been found" })
+    })
 })
 
-
+app.get('*', (req, res) => {
+  res.status(404).json({ message: 'Endpoint not found' })
+})
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })
