@@ -1,7 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import * as DB from './models'
-import cors from 'cors'
+const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 8080
 // Middleware setup
