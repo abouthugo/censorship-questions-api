@@ -1,0 +1,1 @@
+This is a simple API for an interactive presentation with the help of React and Spectable
