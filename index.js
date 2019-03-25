@@ -7,6 +7,13 @@ const port = process.env.PORT || 8080
 app.use(bodyParser.json()) // allows body to be received as json
 app.use(bodyParser.urlencoded({ extended: false })) // allows body to be received as url encoded
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 // Routes
 app.get('/', (req, res) => {
   res.json({
